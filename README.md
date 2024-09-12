@@ -22,3 +22,5 @@ client-2
 
 ### Access Hazelcast-Management
 http://localhost:8081
+add new cluster:
+![new-cluster](https://raw.githubusercontent.com/nmicra/hazelcast-client-server/main/hz-management.png)
