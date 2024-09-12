@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  hazelcast-server:
+    image: hzservertest
+    container_name: hazelcast-server
+    environment:
+      - JAVA_OPTS=-Dspring.profiles.active=dev
+      - IS_K8S=false
+      - HZ_CLUSTER_NAME=my-test-cluster-local
+    ports:
+      - "5701:5701"
+      - "8080:8080"
+    networks:
+      - hazelcast-network
+
+  management-center:
+    image: hazelcast/management-center
+    container_name: hazelcast-management-center
+    environment:
+      - HZ_CLUSTERNAME=my-test-cluster-local
+    ports:
+      - "8081:8080"
+    networks:
+      - hazelcast-network
+    depends_on:
+      - hazelcast-server
+  hazelcast-client1:
+    image: hzclienttest
+    container_name: hzclienttest1
+    environment:
+      - JAVA_OPTS=-Dspring.profiles.active=dev
+      - IS_K8S=false
+      - HZ_CLUSTER_NAME=my-test-cluster-local
+      - NON_K8S_SERVERS=hazelcast-server:5701
+    ports:
+      - "8383:8383"
+    networks:
+      - hazelcast-network
+    depends_on:
+      - management-center
+  hazelcast-client2:
+    image: hzclienttest
+    container_name: hzclienttest2
+    environment:
+      - JAVA_OPTS=-Dspring.profiles.active=dev
+      - IS_K8S=false
+      - HZ_CLUSTER_NAME=my-test-cluster-local
+      - NON_K8S_SERVERS=hazelcast-server:5701
+    ports:
+      - "8384:8383"
+    networks:
+      - hazelcast-network
+    depends_on:
+      - management-center
+networks:
+  hazelcast-network:
+    driver: bridge

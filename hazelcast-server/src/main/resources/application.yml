@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: hazelcast-server
+
+server:
+  port: 8080
+
+hzserverms.hazelcast:
+  clustername: ${HZ_CLUSTER_NAME:my-test-cluster-local}
+  servicename: ${K8S_SERVICE_NAME:}
+  communicationPort: ${HZ_COMMUNICATION_PORT:5701}
+  k8snamespace: ${K8S_NAME_SPACE:default}
+  isK8s: ${IS_K8S:false}

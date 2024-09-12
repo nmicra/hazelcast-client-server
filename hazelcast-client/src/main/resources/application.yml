@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: hazelcast-client
+
+server:
+  port: 8383
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+hzclientms.hazelcast:
+  clustername: ${HZ_CLUSTER_NAME:my-test-cluster-local}
+  servicename: ${K8S_SERVICE_NAME:}
+  communicationPort: ${HZ_COMMUNICATION_PORT:5701}
+  k8snamespace: ${K8S_NAME_SPACE:default}
+  nonK8sServers: ${NON_K8S_SERVERS:localhost:5701}
+  isK8s: ${IS_K8S:false}
